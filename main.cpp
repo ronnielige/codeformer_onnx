@@ -50,7 +50,7 @@ CodeFormer::CodeFormer(string model_path)
 	AllocatorWithDefaultOptions allocator;
 	for (int i = 0; i < numInputNodes; i++)
 	{
-		input_names.push_back(ort_session->GetInputName(i, allocator));
+		input_names.push_back(ort_session->GetInputNameAllocated(i, allocator).get());
 		Ort::TypeInfo input_type_info = ort_session->GetInputTypeInfo(i);
 		auto input_tensor_info = input_type_info.GetTensorTypeAndShapeInfo();
 		auto input_dims = input_tensor_info.GetShape();
@@ -58,7 +58,7 @@ CodeFormer::CodeFormer(string model_path)
 	}
 	for (int i = 0; i < numOutputNodes; i++)
 	{
-		output_names.push_back(ort_session->GetOutputName(i, allocator));
+		output_names.push_back(ort_session->GetOutputNameAllocated(i, allocator).get());
 		Ort::TypeInfo output_type_info = ort_session->GetOutputTypeInfo(i);
 		auto output_tensor_info = output_type_info.GetTensorTypeAndShapeInfo();
 		auto output_dims = output_tensor_info.GetShape();
@@ -147,4 +147,5 @@ int main()
 	imshow("dstimg", dstimg);
 	waitKey(0);
 	destroyAllWindows();
+	printf("finished!!!");
 }
