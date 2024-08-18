@@ -1,13 +1,13 @@
-# CodeFormer-onnxrun-cpp-py
-使用ONNXRuntime部署CodeFormer图像清晰修复，包含C++和Python两个版本的程序。
-CodeFormer是一个很有名的图像超分辨率模型，它是NeurIPS 2022会议论文。
+# 参考资料
+* 源码参考：       https://github.com/hpc203/CodeFormer-onnxrun-cpp-py
+* csdn文章参考：   https://blog.csdn.net/fengqiao1999/article/details/139027453
+* 自己项目代码地址：https://github.com/ronnielige/codeformer_onnx
 
-训练源码在https://github.com/sczhou/CodeFormer
+# 1、安装onnxruntime和opencv
+* onnxruntime下载地址： https://github.com/microsoft/onnxruntime/releases
+这里要下载早期的onnxruntime版本，最新的版本已经无法调用本项目中的onnx模型，而且接口名称也有改变：ort_session->GetInputName和ort_session->GetOutputName 都已经没有了。
+本工程用的onnx runtime版本为 1.5.2，其页面地址为https://github.com/microsoft/onnxruntime/releases?page=4，下载地址为https://github.com/microsoft/onnxruntime/releases/download/v1.5.2/onnxruntime-win-x86-1.5.2.zip
+* opencv下载地址：          https://opencv.org/releases/
 
-onnx文件在百度云盘，下载链接：https://pan.baidu.com/s/18g918VdcyODdVcSOCLutOA?pwd=ixre 
-提取码：ixre
-
-在编写完程序后，测试了多张图片，发现如果输入图片本身是清晰的图片，那么经过CodeFormer的推理之后，
-得到的图片反而变形走样了，使得图片变得不清晰了。因此，一套合理的程序是，在执行CodeFormer之前，
-对输入图片做一个模糊检测，如果判定图片是模糊的，才能输入到CodeFormer。试验分析，可以看我的
-csdn博客文章 https://blog.csdn.net/nihate/article/details/112731327
+# 2、opencv配置方法
+https://blog.csdn.net/weixin_43889994/article/details/137809523
