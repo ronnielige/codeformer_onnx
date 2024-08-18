@@ -1,7 +1,7 @@
 # 参考资料
-源码参考：       https://github.com/hpc203/CodeFormer-onnxrun-cpp-py
-csdn文章参考：   https://blog.csdn.net/fengqiao1999/article/details/139027453
-自己项目代码地址：https://github.com/ronnielige/codeformer_onnx
+* 源码参考：       https://github.com/hpc203/CodeFormer-onnxrun-cpp-py
+* csdn文章参考：   https://blog.csdn.net/fengqiao1999/article/details/139027453
+* 自己项目代码地址：https://github.com/ronnielige/codeformer_onnx
 
 # 1、安装onnxruntime和opencv
 * onnxruntime下载地址： https://github.com/microsoft/onnxruntime/releases
