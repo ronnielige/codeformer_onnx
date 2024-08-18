@@ -42,7 +42,9 @@ CodeFormer::CodeFormer(string model_path)
 	//OrtStatus* status = OrtSessionOptionsAppendExecutionProvider_CUDA(sessionOptions, 0);  ///nvidia-cuda加速
 	sessionOptions.SetGraphOptimizationLevel(ORT_ENABLE_BASIC);
 	std::wstring widestr = std::wstring(model_path.begin(), model_path.end());   ///如果在windows系统就这么写
+	printf("before New Session\n");
 	ort_session = new Session(env, widestr.c_str(), sessionOptions);   ///如果在windows系统就这么写
+	printf("after  New Session\n");
 	///ort_session = new Session(env, model_path.c_str(), sessionOptions);  ///如果在linux系统，就这么写
 
 	size_t numInputNodes = ort_session->GetInputCount();
@@ -50,7 +52,7 @@ CodeFormer::CodeFormer(string model_path)
 	AllocatorWithDefaultOptions allocator;
 	for (int i = 0; i < numInputNodes; i++)
 	{
-		input_names.push_back(ort_session->GetInputNameAllocated(i, allocator).get());
+		input_names.push_back(ort_session->GetInputName(i, allocator));
 		Ort::TypeInfo input_type_info = ort_session->GetInputTypeInfo(i);
 		auto input_tensor_info = input_type_info.GetTensorTypeAndShapeInfo();
 		auto input_dims = input_tensor_info.GetShape();
@@ -58,7 +60,7 @@ CodeFormer::CodeFormer(string model_path)
 	}
 	for (int i = 0; i < numOutputNodes; i++)
 	{
-		output_names.push_back(ort_session->GetOutputNameAllocated(i, allocator).get());
+		output_names.push_back(ort_session->GetOutputName(i, allocator));
 		Ort::TypeInfo output_type_info = ort_session->GetOutputTypeInfo(i);
 		auto output_tensor_info = output_type_info.GetTensorTypeAndShapeInfo();
 		auto output_dims = output_tensor_info.GetShape();
@@ -134,8 +136,8 @@ Mat CodeFormer::detect(Mat srcimg)
 
 int main()
 {
-	CodeFormer mynet("codeformer.onnx");
-	string imgpath = "input.png";
+	CodeFormer mynet("D:\\Project\\codeformer_onnx\\bin\\codeformer.onnx");
+	string imgpath = "D:\\Project\\codeformer_onnx\\bin\\input.png";
 	Mat srcimg = imread(imgpath);
 	Mat dstimg = mynet.detect(srcimg);
 	resize(dstimg, dstimg, Size(srcimg.cols, srcimg.rows), INTER_LINEAR);
